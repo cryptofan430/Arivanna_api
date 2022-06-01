@@ -1,0 +1,58 @@
+{
+    "name": "test-endpoint-lambda",
+    "version": "1.0.0",
+    "description": "Example project using the Serverless Framework, JavaScript, AWS Lambda, AWS API Gateway",
+    "dependencies": {
+        "bcryptjs": "^2.4.3",
+        "body-parser": "^1.19.0",
+        "body-parser-for-serverless": "^1.0.1",
+        "boxen": "^3.2.0",
+        "class-transformer": "^0.4.0",
+        "cors": "^2.8.5",
+        "cryptr": "^6.0.2",
+        "dotenv": "^10.0.0",
+        "emailjs": "^3.5.0",
+        "express": "^4.17.1",
+        "express-async-errors": "^3.1.1",
+        "jest": "^23.6.0",
+        "jsonwebtoken": "^8.5.1",
+        "mysql": "^2.18.1",
+        "mysql-parse": "^2.0.8",
+        "mysql2": "^2.3.3-rc.0",
+        "nexmo": "^2.9.1",
+        "nodemailer": "^6.6.3",
+        "reflect-metadata": "^0.1.13",
+        "serverless-mysql": "^1.5.4",
+        "serverless-pseudo-parameters": "^2.5.0",
+        "typeorm": "^0.2.37",
+        "uuid": "^8.3.2"
+    },
+    "devDependencies": {
+        "@types/bcryptjs": "^2.4.2",
+        "@types/express": "^4.17.13",
+        "@types/jsonwebtoken": "^8.5.4",
+        "@types/uuid": "^8.3.1",
+        "axios": "^0.21.1",
+        "env-cmd": "^10.1.0",
+        "http-server": "^0.12.3",
+        "serverless": "^1.83.2",
+        "serverless-jest-plugin": "^0.3.0",
+        "serverless-offline": "^5.12.1",
+        "serverless-stack-output": "^0.2.3",
+        "ts-node-dev": "^1.1.8",
+        "typescript": "^4.3.5",
+        "wait-on": "^3.3.0"
+    },
+    "scripts": {
+        "test": "env-cmd -f ./test.env jest --watchAll --runInBand --detectOpenHandles --verbose",
+        "deploy": "serverless deploy",
+        "start": "serverless offline",
+        "dev": "ts-node-dev src/server.ts",
+        "typeorm": "ts-node-dev ./node_modules/typeorm/cli.js"
+    },
+    "jest": {
+        "testMatch": [
+            "**/?(*.)+(spec|test).[jt]s?(x)"
+        ]
+    }
+}

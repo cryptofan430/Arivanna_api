@@ -1,0 +1,16 @@
+{
+    "type": "mysql",
+    "host": "aaaaremotemysql.com",
+    "port": "3306",
+    "username": "2NnFyeXS6p",
+    "password": "x6DlJ8iqOl",
+    "database": "2NnFyeXS6p",
+    "synchronize": false,
+    "logging": true,
+    "entities": ["src/entities/*.ts"],
+    "migrations": ["src/database/migrations/*ts"],
+    "cli": {
+        "migrationDir": "src/database/migrations",
+        "entitiesDir": "src/entities"
+    }
+}

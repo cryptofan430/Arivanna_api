@@ -1,0 +1,652 @@
+service: hr #${file(./secret.json):ApiName}
+useDotenv: true
+provider:
+    name: aws
+    runtime: nodejs14.x
+    region: ${file(./secret.json):DefaultRegion}
+    stage: prod-hr
+
+functions:
+    test_connect_db: #This Is an example
+        handler: src/middleware/test_connect_db.handler
+        events:
+            - http:
+                  path: /api/test_connect_db
+                  method: post
+        cors: true
+        origin: "*"
+
+    hello: #This Is an example
+        handler: src/middleware/test_res.hello
+        events:
+            - http:
+                  path: /hello
+                  method: post
+        cors: true
+        origin: "*"
+
+    login:
+        handler: src/middleware/auth.login
+        events:
+            - http:
+                  path: /api/login
+                  method: post
+        cors: true
+        origin: "*"
+
+    get_user_id:
+        handler: src/middleware/auth.getuser_id
+        events:
+            - http:
+                  path: /api/getuser_id
+                  method: post
+        cors: true
+        origin: "*"
+
+    # {GET} employee permissions from module_permission_master and module_permission_master
+    # Headers: Authorization = token
+    get_employee_permission:
+        handler: src/middleware/employee.getEmployeePermission
+        events:
+            - http:
+                  path: /api/employeePermission
+                  method: post
+        cors: true
+        origin: "*"
+
+    # {GET} employee permissions from module_permission_master and module_permission_master
+    # Headers: Authorization = token
+    getAllEmployeePermission:
+        handler: src/middleware/employee.getAllEmployeePermission
+        events:
+            - http:
+                  path: /api/getAllEmployeePermission
+                  method: post
+        cors: true
+        origin: "*"
+
+    # {GET} employee data from employee table
+    # Headers: Authorization = token
+    getEmployee:
+        handler: src/middleware/employee.getEmployee
+        events:
+            - http:
+                  path: /api/user
+                  # TODO(Umar) This should be GET not POST
+                  method: post
+        cors: true
+        origin: "*"
+
+    # {GET} all employees list from employee table
+    # Headers: Authorization = token
+    getEmployeeqty:
+        handler: src/middleware/employee.getEmployeeqty
+        events:
+            - http:
+                  path: /api/getEmployeeqty
+                  method: post
+        cors: true
+        origin: "*"
+
+    getEmployeeList:
+        handler: src/middleware/employee.getEmployeeList
+        events:
+            - http:
+                  path: /api/employeesList
+                  method: post
+        cors: true
+        origin: "*"
+
+    getEmployeeListMaverick:
+        handler: src/middleware/employee.getEmployeeListMaverick
+        events:
+            - http:
+                  path: /api/employeesListMaverick
+                  method: post
+        cors: true
+        origin: "*"
+
+    # {GET} employees data from employee table
+    # Headers: Authorization = token
+    # Params: ID
+    getEmployeeProfile:
+        handler: src/middleware/employee.getEmployeeProfile
+        events:
+            - http:
+                  path: /api/employeeProfile/{id}
+                  method: post
+        cors: true
+        origin: "*"
+
+    updateEmployeeProfile:
+        handler: src/middleware/employee.updateEmployeeProfile
+        events:
+            - http:
+                  path: /api/employeeProfile
+                  method: post
+        cors: true
+        origin: "*"
+
+    getSingleEmployee:
+        handler: src/middleware/employee.getSingleEmployee
+        events:
+            - http:
+                  path: /api/employee/{id}
+                  method: post
+        cors: true
+        origin: "*"
+
+    # -----------------
+    # department master
+    # -----------------
+
+    # {POST} create new department
+    create_department:
+        handler: src/middleware/departmentMaster.create_department
+        events:
+            - http:
+                  path: /api/create_department
+                  method: post
+        cors: true
+        origin: "*"
+
+    # {GET} departments data from department_master table
+    get_department_master_data:
+        handler: src/middleware/departmentMaster.getDepartmentMasterData
+        events:
+            - http:
+                  path: /api/departments
+                  method: post
+        cors: true
+        origin: "*"
+
+    # {GET} departments data from department_master table
+    get_by_id_department_master_data:
+        handler: src/middleware/departmentMaster.getDepartment
+        events:
+            - http:
+                  path: /api/department
+                  method: post
+        cors: true
+        origin: "*"
+
+    # {UPDATE}:
+    update_department:
+        handler: src/middleware/departmentMaster.update_department
+        events:
+            - http:
+                  path: /api/update_department
+                  method: post
+        cors: true
+        origin: "*"
+
+    # {DELETE}:
+    delete_department:
+        handler: src/middleware/departmentMaster.delete_department
+        events:
+            - http:
+                  path: /api/delete_department
+                  method: post
+        cors: true
+        origin: "*"
+
+    # this is only to be used in the development. It will aactually delete the data for the user. where this in use production will only set the user data as inactive
+    real_delete_employee_date:
+        handler: src/middleware/dev.real_delete_employee_date
+        events:
+            - http:
+                  path: /api/real_delete_employee_date
+                  method: post
+        cors: true
+        origin: "*"
+
+    # {GET} designations data from title_master table
+    # Headers: Authorization = token
+    getdefault_permissions_for_title:
+        handler: src/middleware/permission.get_default_permissions_for_title
+        events:
+            - http:
+                  path: /api/getdefault_permissions_for_title
+                  method: post
+        cors: true
+        origin: "*"
+
+    get_default_permission_by_title_id:
+        handler: src/middleware/permission.get_default_permission_by_title_id
+        events:
+            - http:
+                  path: /api/getDefaultPermissionsByTitleId/{title_id}
+                  method: post
+        cors: true
+        origin: "*"
+
+    get_titles:
+        handler: src/middleware/titles.get_titles
+        events:
+            - http:
+                  path: /api/titles
+                  method: post
+        cors: true
+        origin: "*"
+
+    create_title:
+        handler: src/middleware/titles.create_title
+        events:
+            - http:
+                  path: /api/create_title
+                  method: post
+        cors: true
+        origin: "*"
+
+    delete_title:
+        handler: src/middleware/titles.delete_title
+        events:
+            - http:
+                  path: /api/delete_title
+                  method: post
+        cors: true
+        origin: "*"
+
+    update_title:
+        handler: src/middleware/titles.update_title
+        events:
+            - http:
+                  path: /api/update_title
+                  method: post
+        cors: true
+        origin: "*"
+
+    update_default_perms:
+        handler: src/middleware/perms.update_default_perms
+        events:
+            - http:
+                  path: /api/update_default_perms
+                  method: post
+        cors: true
+        origin: "*"
+
+    create_perm_module:
+        handler: src/middleware/perms.create_perm_module
+        events:
+            - http:
+                  path: /api/create_perm_module
+                  method: post
+        cors: true
+        origin: "*"
+
+    delete_perm_module:
+        handler: src/middleware/perms.delete_perm_module
+        events:
+            - http:
+                  path: /api/delete_perm_module
+                  method: post
+        cors: true
+        origin: "*"
+
+    update_perm_module:
+        handler: src/middleware/perms.update_perm_module
+        events:
+            - http:
+                  path: /api/update_perm_module
+                  method: post
+        cors: true
+        origin: "*"
+
+    # {GET} designations data from title_master table
+    # Headers: Authorization = token
+    getTitleMasterData:
+        handler: src/middleware/designationMaster.getDesignationMasterData
+        events:
+            - http:
+                  path: /api/title/{department_id}
+                  method: post
+        cors: true
+        origin: "*"
+
+    # {GET} designations data from title_master table
+    # Headers: Authorization = token
+    getAllTitles:
+        handler: src/middleware/designationMaster.getAllTitles
+        events:
+            - http:
+                  path: /api/getAllTitles
+                  method: post
+        cors: true
+        origin: "*"
+
+    # This is for company, dep, title, permissions, and defaults
+    # Headers: Authorization = token
+    getAllforrefiner:
+        handler: src/middleware/master.getAllforrefiner
+        events:
+            - http:
+                  path: /api/getAllforrefiner
+                  method: post
+        cors: true
+        origin: "*"
+
+    createEmployeeNew:
+        handler: src/middleware/employee.createEmployeeNew
+        events:
+            - http:
+                  path: api/employee/create
+                  method: post
+        cors: true
+        origin: "*"
+
+    createEmployeeMaverick:
+        handler: src/middleware/employee.createEmployeeMaverick
+        events:
+            - http:
+                  path: api/employee/createMaverick
+                  method: post
+        cors: true
+        origin: "*"
+
+    updateEmployee:
+        handler: src/middleware/employee.updateEmployee
+        events:
+            - http:
+                  path: api/employee/update/{id}
+                  method: post
+        cors: true
+        origin: "*"
+
+    updateEmployeeMaverick:
+        handler: src/middleware/employee.updateEmployeeMaverick
+        events:
+            - http:
+                  path: api/employee/updateMaverick/{id}
+                  method: post
+        cors: true
+        origin: "*"
+    getEmployeeEditData:
+        handler: src/middleware/employee.getEmployeeEditData
+        events:
+            - http:
+                  path: /employee/edit/{id}/v1
+                  method: post
+        cors: true
+        origin: "*"
+
+    getCompanyMasterData:
+        handler: src/middleware/companyMaster.getCompanyMasterData
+        events:
+            - http:
+                  path: api/get_companys
+                  method: post
+        cors: true
+        origin: "*"
+
+    deleteEmployeeData:
+        handler: src/middleware/employee.deleteEmployeeData
+        events:
+            - http:
+                  path: /employee/delete/{id}/v1
+                  method: post
+        cors: true
+        origin: "*"
+
+    getModuleMasterData:
+        handler: src/middleware/moduleMaster.getModuleMasterData
+        events:
+            - http:
+                  path: /api/getModuleMasterData
+                  method: post
+        cors: true
+        origin: "*"
+
+    # --------
+    # JOB part
+    # --------
+
+    getapplicationsforuser:
+        handler: src/middleware/job.getapplicationsforuser
+        events:
+            - http:
+                  path: /api/getapplicationsforuser/{id}
+                  method: post
+        cors: true
+        origin: "*"
+
+    getsignelforuser:
+        handler: src/middleware/job.getsignelforuser
+        events:
+            - http:
+                  path: /api/getsignelforuser/{id}
+                  method: post
+        cors: true
+        origin: "*"
+
+
+
+    getapplications:
+        handler: src/middleware/job.getapplications
+        events:
+            - http:
+                  path: /api/getapplications
+                  method: post
+        cors: true
+        origin: "*"
+
+    getrecentjobs:
+        handler: src/middleware/job.getrecentjobs
+        events:
+            - http:
+                  path: /api/getrecentjobs
+                  method: post
+        cors: true
+        origin: "*"
+
+    getrecentapplications:
+        handler: src/middleware/job.getrecentapplications
+        events:
+            - http:
+                  path: /api/getrecentapplications
+                  method: post
+        cors: true
+        origin: "*"
+
+    getjobdashboard:
+        handler: src/middleware/job.getjobdashboard
+        events:
+            - http:
+                  path: /api/getjobdashboard
+                  method: post
+        cors: true
+        origin: "*"
+
+    getJobseekerqty:
+        handler: src/middleware/job.getJobseekerqty
+        events:
+            - http:
+                  path: /api/getJobseekerqty
+                  method: post
+        cors: true
+        origin: "*"
+
+    getJobvacancies:
+        handler: src/middleware/job.getJobvacancies
+        events:
+            - http:
+                  path: /api/getJobvacancies
+                  method: post
+        cors: true
+        origin: "*"
+
+    getJobPosts:
+        handler: src/middleware/job.getJobPosts
+        events:
+            - http:
+                  path: /api/getJobs
+                  method: post
+        cors: true
+        origin: "*"
+
+    getopenJobPosts:
+        handler: src/middleware/job.getopenJobPosts
+        events:
+            - http:
+                  path: /api/getopenJobPosts
+                  method: post
+        cors: true
+        origin: "*"
+
+    getLatestJobs:
+        handler: src/middleware/job.getLatestJobs
+        events:
+            - http:
+                  path: /api/getLatestJobs
+                  method: post
+        cors: true
+
+    getJobPost:
+        handler: src/middleware/job.getJobPost
+        events:
+            - http:
+                  path: /api/getJob/{id}
+                  method: post
+        cors: true
+        origin: "*"
+
+    addJobPost:
+        handler: src/middleware/job.addJobPost
+        events:
+            - http:
+                  path: /api/addJob
+                  method: post
+        cors: true
+        origin: "*"
+
+    updateJobPost:
+        handler: src/middleware/job.updateJobPost
+        events:
+            - http:
+                  path: /api/jobs/{id}
+                  method: post
+        cors: true
+        origin: "*"
+
+    deleteJobPost:
+        handler: src/middleware/job.deleteJobPost
+        events:
+            - http:
+                  path: /api/deleteJob/{id}
+                  method: post
+        cors: true
+        origin: "*"
+
+    upload_job_detail:
+        handler: src/middleware/job.upload_job_detail
+        events:
+            - http:
+                  path: /api/upload_job_detail
+                  method: post
+        cors: true
+        origin: "*"
+
+    # --------------------
+    # APPLICANTS
+    # --------------------
+    getactiveApplicationqty:
+        handler: src/middleware/job.getactiveApplicationqty
+        events:
+            - http:
+                  path: /api/getactiveApplicationqty
+                  method: post
+        cors: true
+        origin: "*"
+
+    addApplicant:
+        handler: src/middleware/job.addApplicant
+        events:
+            - http:
+                  path: /api/applicants/{id}
+                  method: post
+        cors: true
+        origin: "*"
+
+    getApplicants:
+        handler: src/middleware/job.getApplicants
+        events:
+            - http:
+                  path: /api/applicants
+                  method: post
+        cors: true
+        origin: "*"
+
+    updateApplicant:
+        handler: src/middleware/job.updateApplicant
+        events:
+            - http:
+                  path: /api/applicant/{id}
+                  method: post
+        cors: true
+        origin: "*"
+
+    getDocumentsByEmployeeId:
+        handler: src/middleware/document.getDocumentsByEmployeeId
+        events:
+            - http:
+                  path: /api/getDocumentsByEmployeeId/{id}
+                  method: post
+        cors: true
+        origin: "*"
+
+    getSpecificCompanyProvidedDocumentsByEmployeeId:
+        handler: src/middleware/document.getSpecificCompanyProvidedDocumentsByEmployeeId
+        events:
+            - http:
+                  path: /api/getSpecificCompanyProvidedDocumentsByEmployeeId/{id}
+                  method: post
+        cors: true
+        origin: "*"
+
+    changeApprovedByEmployeeDocumentUrlId:
+        handler: src/middleware/document.changeApprovedByEmployeeDocumentUrlId
+        events:
+            - http:
+                  path: /api/changeApprovedByEmployeeDocumentUrlId/{id}
+                  method: post
+        cors: true
+        origin: "*"
+
+    getEmployeeIdByApplicantsId:
+        handler: src/middleware/applicant.getEmployeeIdByApplicantsId
+        events:
+            - http:
+                  path: /api/getEmployeeIdByApplicantsId/{id}
+                  method: post
+        cors: true
+        origin: "*"
+
+    getApplicationStatuses:
+        handler: src/middleware/applicant.getApplicationStatuses
+        events:
+            - http:
+                  path: /api/getApplicationStatuses
+                  method: post
+        cors: true
+        origin: "*"
+
+    createEmployeeDocumentUrl:
+        handler: src/middleware/employee.createEmployeeDocumentUrl
+        events:
+            - http:
+                  path: /api/createEmployeeDocumentUrl
+                  method: post
+        cors: true
+        origin: "*"
+
+    getJobPostByIdApplicants:
+        handler: src/middleware/job.getJobPostByIdApplicants
+        events:
+            - http:
+                  path: /api/getJobPostByIdApplicants/{id}
+                  method: post
+        cors: true
+        origin: "*"
+
+plugins:
+    - serverless-offline
+    - serverless-pseudo-parameters
